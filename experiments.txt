@@ -1,2 +1,10 @@
-- tried changing "size = 1024" to "size = 1024 + 1 - 1"
+
+What I have tried:
+  - tried changing "size = 1024" to "size = 1024 + 1 - 1", compiled correctly. 
+  - replaced "if (hdr.ipv4.isValid()) { " with  "if (hdr.ipv4.isValid() == true ? true : false) { ", compiled correctly.
+  
+Interesting things that I have noticed:
+  - added 'in error parseError' as a parameter to the ingress control, got "cannot unify parseError
+  paraemeter with hdr because they have different directions" - weird (don't know what that means). 
+  
 
