@@ -1,0 +1,11 @@
+
+
+Control:
+  - 'in', 'inout', and 'out' are specifications for parameters.
+  - 'in' refers to an input and cannot be modified
+  - 'out' refers to an output, which should be modified
+  - 'inout' refers to a variable to that functions as both an input and out, which should be
+  modified.
+
+
+
