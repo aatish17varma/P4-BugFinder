@@ -2,9 +2,12 @@
 What I have tried:
   - tried changing "size = 1024" to "size = 1024 + 1 - 1", compiled correctly. 
   - replaced "if (hdr.ipv4.isValid()) { " with  "if (hdr.ipv4.isValid() == true ? true : false) { ", compiled correctly.
+  - added random integer local variable to an action - "int<10> y = 1; ", compiled correctly.
   
 Interesting things that I have noticed:
   - added 'in error parseError' as a parameter to the ingress control, got "cannot unify parseError
   paraemeter with hdr because they have different directions" - weird (don't know what that means). 
   
 
+4/1/19 - Looked at https://github.com/p4lang/p4c/issues?q=is%3Aissue+author%3Avikramnathan+is%3Aclosed, saw that most errors had
+         to do with registers and bit vectors. Will take a closer look. 
