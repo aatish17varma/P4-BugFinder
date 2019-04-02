@@ -10,4 +10,6 @@ Interesting things that I have noticed:
   
 
 4/1/19 - Looked at https://github.com/p4lang/p4c/issues?q=is%3Aissue+author%3Avikramnathan+is%3Aclosed, saw that most errors had
-         to do with registers and bit vectors. Will take a closer look. 
+to do with registers and bit vectors. Will take a closer look. 
+
+4/2/19 - tried to write struct within a struct in P4, could not compile
