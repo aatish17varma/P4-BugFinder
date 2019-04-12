@@ -100,7 +100,7 @@ control MyIngress(inout headers hdr,
 
 /**************************** GPX **************************************/
 /******* 03 Adding all match tables without changing the logic *********/
-/******* 001 Adding one tables without doing extra works ****************/
+/******* 002 Adding more tables without modifying logic ****************/
 
 action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         standard_metadata.egress_spec = port;

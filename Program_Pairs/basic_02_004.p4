@@ -99,15 +99,22 @@ control MyIngress(inout headers hdr,
     }
 
 /**************************** GPX **************************************/
-/******* 03 Adding all match tables without changing the logic *********/
-/******* 001 Adding one table without modifying logic ****************/
+/******* 02 Doing Simple Computation without changing the logic ********/
+/******* 004 Minus/Adds Large Number causing overflow ******************/
 
 action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
-        standard_metadata.egress_spec = port;
-        hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;
-        hdr.ethernet.dstAddr = dstAddr;
+        bit<9> newPort = port;			// Middle variable
+	newPort = newPort - 511;
+	newPort = newPort + 511;
+	standard_metadata.egress_spec = newPort;	// Work with middle variable
+	bit<48> newDstAddr = dstAddr;			// Middle variable
+        newDstAddr = newDstAddr + 1;
+	newDstAddr = newDstAddr - 1;
+	hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;	// Work with middle variable
+        hdr.ethernet.dstAddr = newDstAddr;
         hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
     }
+
 
     
     table ipv4_lpm {
@@ -122,29 +129,11 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         size = 1024;
         default_action = drop();
     }
-
-
-/***** GPX Adding an Noaction table without changing the logic ********/
-
-    
-    table no_action {
-        key = {
-            hdr.ipv4.dstAddr: lpm;
-        }
-        actions = {
-            NoAction;
-        }
-        size = 1024;
-        default_action = NoAction;
-    }
-
-/******************* GPX *******************************************/
     
     apply {
         if (hdr.ipv4.isValid()) {
             ipv4_lpm.apply();
         }
-	no_action.apply();
     }
 }
 
