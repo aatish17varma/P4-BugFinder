@@ -13,3 +13,5 @@ Interesting things that I have noticed:
 to do with registers and bit vectors. Will take a closer look. 
 
 4/2/19 - tried to write struct within a struct in P4, could not compile
+         documentation does not describe well what ks[] in the ParserModel is, ask @Anirudh or
+         @Vikas

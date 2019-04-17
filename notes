@@ -8,4 +8,13 @@ Control:
   modified.
 
 
+  Headers are encapsulated in each other....
+    - There is a large "frame" which holds an IP header, and IP Data. 
+    - The IP Data holds a TCP header and TCP data
+    - The TCP data holds the Application Data. 
+
+    This is why in the P4 parser, you parse the large ethernet header, and find the upper layer
+    headers inside of that and parse those.
+
+
 
