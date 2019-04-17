@@ -27,4 +27,6 @@ sendp(p3,iface="veth2")
 p4 = Ether()/IP(src="10.0.0.0",dst="128.0.0.1")/TCP(sport=1234,dport=10)/data
 sendp(p4,iface="veth2")
 
+# Use sniff() to capture packets
+#sniff(filter="",iface="any", prn=function, count=N)
 
