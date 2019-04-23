@@ -6,6 +6,13 @@ Mirroring Rules:
 - Writing to registers, bit flip, and read back to register
 
 
+One example bit flip we can do is :
+
+unsigned int c = ((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1);
+c = ((c & 0xaaaaaaaa) >> 1) | ((c & 0x55555555) << 1);
+
+this is the equivalent of twice reversing a bit vector, which should be equivalent (I think - got it
+    from https://www.topcoder.com/community/competitive-programming/tutorials/a-bit-of-fun-fun-with-bits/)
 
 
 
