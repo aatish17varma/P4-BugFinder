@@ -1,0 +1,6 @@
+Feedback Directed Test Generation:
+- Start with a random generated method.
+- At each step, it uses the extention operator:
+    - it addes a value to vals (which will be used as inputs to a function), and adds a function to sequence. 
+
+

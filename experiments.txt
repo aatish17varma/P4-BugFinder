@@ -15,3 +15,18 @@ to do with registers and bit vectors. Will take a closer look.
 4/2/19 - tried to write struct within a struct in P4, could not compile
          documentation does not describe well what ks[] in the ParserModel is, ask @Anirudh or
          @Vikas
+
+       - added two transition statements in the same state (transition accept; transition reject;),
+         and compiler threw error - "unexpected TRANSITION, expecting }". Documenttion did not specify
+         specifically that you couldn't have two transitions. ask @Anirudh or @Vikas
+
+       
+       - Added transition to start state in start state. Program compiled, but threw warning that
+         Accept State was unreachable. Seems ok, but I think it would be better to not allow
+         infinite loop like this.
+
+        - changed TYPE_IPV4 to really long bit string, compiled complained correctly that cant do that
+         shit
+
+
+ 

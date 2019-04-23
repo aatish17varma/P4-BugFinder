@@ -17,4 +17,12 @@ Control:
     headers inside of that and parse those.
 
 
+"Controls" are basically match-action pipelines.
+
+The matches and their accompanying actions are "declared" in the Control Plane.
+
+But you can also have actions that you declare and implement in the Data plane which can be called
+directly in an "apply block"
+
+
 
