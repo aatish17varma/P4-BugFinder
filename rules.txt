@@ -1,0 +1,13 @@
+Mirroring Rules:
+- Replace if statement with turnary operators
+- Add empty tables
+- Split an action to sub-actions, which are runned consecutively
+- Extraneous Bit Flips
+- Writing to registers, bit flip, and read back to register
+
+
+
+
+
+Mutating Rules:
+- 
