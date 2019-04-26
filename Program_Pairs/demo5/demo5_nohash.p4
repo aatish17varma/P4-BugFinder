@@ -85,7 +85,8 @@ parser ParserImpl(packet_in packet,
 }
 
 action top_level_action(inout headers hdr) {
-    hdr.ipv4.diffserv = 9;
+    // GPX: remove hdr
+    //hdr.ipv4.diffserv = 9;
 }
 
 control ingress(inout headers hdr,
@@ -173,7 +174,8 @@ control ingress(inout headers hdr,
     }
 
     action sub_action() {
-        hdr.ipv4.diffserv = 5;
+        // GPX: remove hdr
+        //hdr.ipv4.diffserv = 5;
     }
 
     action set_bd_dmac_intf(bit<24> bd, bit<48> dmac, bit<9> intf) {
@@ -185,10 +187,12 @@ control ingress(inout headers hdr,
         // trace output.  I suspect it will not, because the compiler
         // transforms these assignments into assignments that use the
         // ternary operator.
-        hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
+
+        // GPX: remove hdr
+        /*hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
         if (hdr.ipv4.dstAddr[0:0] == 0) {
             hdr.ipv4.ttl = 3 + hdr.ipv4.ttl;
-        }
+        }*/
         sub_action();
     }
     table mac_da {
@@ -209,11 +213,12 @@ control ingress(inout headers hdr,
         // Adding an assignment directly inside a 'control apply'
         // block, to test whether the compiler and bmv2 track its
         // filename and line number info in the bmv2 trace output.
-        if (hdr.ipv4.srcAddr[0:0] == 0) {
+        // GPX: remove hdr
+        /*if (hdr.ipv4.srcAddr[0:0] == 0) {
             hdr.ipv4.identification = hdr.ipv4.identification + 1;
         } else {
             hdr.ipv4.identification = hdr.ipv4.identification - 8;
-        }
+        }*/
         if (meta.fwd_metadata.nexthop_type != NEXTHOP_TYPE_L2PTR) {
             ecmp_group.apply();
             if (meta.fwd_metadata.nexthop_type != NEXTHOP_TYPE_L2PTR) {
