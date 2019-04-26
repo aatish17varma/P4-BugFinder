@@ -1,6 +1,6 @@
 /* -*- mode: P4_16 -*- */
 /*
-Copyright 2017 Cisco Systems, Inc.
+Copyright 2017 Cisco Systems, Icc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -196,7 +196,8 @@ control ingress(inout headers hdr,
             my_drop_with_stat;
 	        my_drop_with_stat_aatish;
         }
-        default_action = my_drop_with_stat_aatish;
+        //default_action = my_drop_with_stat_aatish;
+        default_action = NoAction;
         counters = ipv4_da_lpm_stats;
     }
 
@@ -246,6 +247,12 @@ control ingress(inout headers hdr,
 
     action sub_action() {
         hdr.ipv4.diffserv = 5;
+    }
+
+    /* GPX new default rules */
+
+    action default_forward() {
+        standard_metadata.egress_spec = 2;
     }
 
     action set_bd_dmac_intf(bit<24> bd, bit<48> dmac, bit<9> intf) {
@@ -305,7 +312,8 @@ control ingress(inout headers hdr,
     	
         */
 
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = default_forward;
     }
 
     table mac_da_02 {
@@ -328,7 +336,8 @@ control ingress(inout headers hdr,
     	
         */
 
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = default_forward;
     }
 
     apply {
@@ -373,7 +382,8 @@ control egress(inout headers hdr,
             rewrite_mac;
             my_drop;
         }
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = NoAction;
     }
 
     apply {

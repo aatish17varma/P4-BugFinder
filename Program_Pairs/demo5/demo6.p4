@@ -121,6 +121,8 @@ control ingress(inout headers hdr,
         ipv4_da_lpm_stats.count();
         mark_to_drop();
     }
+
+
     table ipv4_da_lpm {
         key = {
             hdr.ipv4.dstAddr: lpm;
@@ -130,7 +132,8 @@ control ingress(inout headers hdr,
             set_ecmp_group_idx;
             my_drop_with_stat;
         }
-        default_action = my_drop_with_stat;
+        //default_action = my_drop_with_stat;
+        default_action = NoAction;
         counters = ipv4_da_lpm_stats;
     }
 
@@ -173,6 +176,12 @@ control ingress(inout headers hdr,
         hdr.ipv4.diffserv = 5;
     }
 
+    /* GPX new default rules */
+
+    action default_forward() {
+        standard_metadata.egress_spec = 2;
+    }
+
     action set_bd_dmac_intf(bit<24> bd, bit<48> dmac, bit<9> intf) {
         meta.fwd_metadata.out_bd = bd;
         hdr.ethernet.dstAddr = dmac;
@@ -196,7 +205,8 @@ control ingress(inout headers hdr,
             set_bd_dmac_intf;
             my_drop;
         }
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = default_forward;
     }
 
     apply {
@@ -235,7 +245,8 @@ control egress(inout headers hdr,
             rewrite_mac;
             my_drop;
         }
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = NoAction;
     }
 
     apply {
