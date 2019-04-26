@@ -161,8 +161,8 @@ control ingress(inout headers hdr,
     table compute_ipv4_hashes {
         actions = {
             //Added by Aatish: Do Nothing Action Calls
-            doNothing1();
-            doNothing2();
+            doNothing1;
+            doNothing2;
             compute_lkp_ipv4_hash;
         }
         default_action = compute_lkp_ipv4_hash;
