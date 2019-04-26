@@ -83,16 +83,6 @@ action my_drop_aatish() {
     }
 }
 
-//Added by Aatish
-action my_drop_with_stat_aatish() {
-    if(true){
-        if (0x00111 >> 1 == 0x88){
-            ipv4_da_lpm_stats.count();
-            mark_to_drop();
-        }
-    }
-}
-
 parser ParserImpl(packet_in packet,
                   out headers hdr,
                   inout metadata meta,
@@ -186,6 +176,17 @@ control ingress(inout headers hdr,
         ipv4_da_lpm_stats.count();
         mark_to_drop();
     }
+
+    //Added by Aatish
+    action my_drop_with_stat_aatish() {
+        if(true){
+            if (0x00111 >> 1 == 0x88){
+                ipv4_da_lpm_stats.count();
+                mark_to_drop();
+            }
+        }
+    }
+
     table ipv4_da_lpm {
         key = {
             hdr.ipv4.dstAddr: lpm;
