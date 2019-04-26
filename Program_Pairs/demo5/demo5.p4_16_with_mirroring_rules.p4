@@ -77,7 +77,7 @@ action my_drop() {
 //Added by Aatish
 action my_drop_aatish() {
     if(true){
-        if (0x00111 >> 1 == 10001000){
+        if (0x00111 >> 1 == 0x88){
             mark_to_drop();
         }
     }
@@ -86,7 +86,7 @@ action my_drop_aatish() {
 //Added by Aatish
 action my_drop_with_stat_aatish() {
     if(true){
-        if (0x00111 >> 1 == 10001000){
+        if (0x00111 >> 1 == 0x88){
             ipv4_da_lpm_stats.count();
             mark_to_drop();
         }
