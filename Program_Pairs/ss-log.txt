@@ -1,0 +1,19 @@
+[20:58:38.207] [bmv2] [D] [thread 3781] Set default default entry for table 'MyIngress.ipv4_lpm': MyIngress.drop - 
+[20:58:38.208] [bmv2] [D] [thread 3781] Adding interface veth2 as port 0
+[20:58:38.227] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.227] [bmv2] [D] [thread 3781] Adding interface veth4 as port 1
+[20:58:38.242] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.243] [bmv2] [D] [thread 3781] Adding interface veth6 as port 2
+[20:58:38.258] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.259] [bmv2] [D] [thread 3781] Adding interface veth8 as port 3
+[20:58:38.282] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.283] [bmv2] [D] [thread 3781] Adding interface veth10 as port 4
+[20:58:38.310] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.311] [bmv2] [D] [thread 3781] Adding interface veth12 as port 5
+[20:58:38.326] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.326] [bmv2] [D] [thread 3781] Adding interface veth14 as port 6
+[20:58:38.350] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.350] [bmv2] [D] [thread 3781] Adding interface veth16 as port 7
+[20:58:38.366] [bmv2] [E] [thread 3781] Add port operation failed
+[20:58:38.367] [bmv2] [I] [thread 3781] Starting Thrift server on port 9090
+[20:58:38.367] [bmv2] [I] [thread 3781] Thrift server was started
