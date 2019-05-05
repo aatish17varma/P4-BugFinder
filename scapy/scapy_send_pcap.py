@@ -8,4 +8,4 @@ for pkt in pkts:
      #pkt[Ether].dst= new_dst_mac
      #pkt[IP].src= new_src_ip # i.e new_src_ip="255.255.255.255"
      #pkt[IP].dst= new_dst_ip
-     sendp(pkt) #sending packet at layer 2
+     sendp(pkt, iface="veth0") #sending packet at layer 2
