@@ -139,7 +139,7 @@ control ingress(inout headers hdr,
     direct_counter(CounterType.packets) aatish_ipv4_da_lpm_stats;
     //This triggers error for some reasion: ipv4_da_lpm_stats = aatish_ipv4_da_lpm_stats;
 
-    Register<bit<34>>(128) registerForPacketField;
+    register<bit<34>>(128) registerForPacketField;
 
     action compute_lkp_ipv4_hash() {
         hash(meta.fwd_metadata.hash1, HashAlgorithm.crc16,
