@@ -288,7 +288,7 @@ control egress(inout headers hdr,
         }
         // Chanegd default action
         //default_action = my_drop;
-        default_action = NoAction(); // GPX: NoAction, not drop
+        default_action = NoAction; // GPX: NoAction, not drop
     }
 
     apply {
