@@ -135,6 +135,7 @@ control ingress(inout headers hdr,
             set_l2ptr_with_stat;
             set_ecmp_group_idx;
             my_drop_with_stat;
+	    @default_only NoAction;
         }
         // Chanegd default action
         //default_action = my_drop_with_stat;
@@ -207,6 +208,7 @@ control ingress(inout headers hdr,
         actions = {
             set_bd_dmac_intf;
             my_drop;
+	    @default_only NoAction;
         }
         // Chanegd default action
         //default_action = my_drop;
@@ -235,7 +237,7 @@ control ingress(inout headers hdr,
             hdr.ipv4.dstAddr: lpm;
         }
         actions = {
-            default_forward
+            default_forward;
         }
         default_action = default_forward;
     }
@@ -278,6 +280,7 @@ control egress(inout headers hdr,
         actions = {
             rewrite_mac;
             my_drop;
+	    @default_only NoAction;
         }
         // Chanegd default action
         //default_action = my_drop;
