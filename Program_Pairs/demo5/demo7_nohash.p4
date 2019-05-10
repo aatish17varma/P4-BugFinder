@@ -222,13 +222,17 @@ control ingress(inout headers hdr,
 
         if (hdr.ipv4.dstAddr == 0xFFFFFFFF) {
             // redirect all the broadcast packets
-            standard_metadata.egress_spec = 0;
+            standard_metadata.egress_spec = 1;
         } else if (hdr.ipv4.dstAddr[0:0] == 0) {
             // try this expression to match with certain bits in the dstIP
             //hdr.ipv4.ttl = 3 + hdr.ipv4.ttl;
             standard_metadata.egress_spec = 2;
-        } else {
+        } else if (hdr.ipv4.dstAddr[31:25] == 10) {
+            // try this expression to match with certain bits in the dstIP
+            //hdr.ipv4.ttl = 3 + hdr.ipv4.ttl;
             standard_metadata.egress_spec = 3;
+        } else {
+            standard_metadata.egress_spec = 4;
         }
     }
 
