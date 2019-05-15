@@ -169,7 +169,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         /*if (hdr.ipv4.isValid()) {
             ipv4_lpm.apply();
         }*/
-        default_forward;
+        default_table.apply();
     }
 }
 
