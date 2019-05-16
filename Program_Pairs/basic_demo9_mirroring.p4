@@ -155,7 +155,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         bit<9> middle_egress_spec = 0;                      // (Mirroring Rule 1): Middle variable
 
         if(true) {
-            middle_egress_spec = (hdr.ipv4.dstAddr == 0xFFFFFFFF)? 0x1 : 4;     // (Mirroring Rule 3): Turnary Operators
+            middle_egress_spec = (hdr.ipv4.dstAddr == 0xFFFFFFFF)? 1 : 4;     // (Mirroring Rule 3): Turnary Operators
         }
 
         standard_metadata.egress_spec = middle_egress_spec; // (Mirroring Rule 1): Middle variable
