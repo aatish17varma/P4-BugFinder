@@ -5,11 +5,13 @@
 const bit<16> TYPE_IPV4 = 0x800;
 
 /********************** REGISTER ****************************************/
-register egressSpec_register {
+/*register egressSpec_register {
     width: 9;
     static: m_table;
     instance_count: 1024;
-}
+}*/
+
+Register<egressSpec_t> (128) registerBank; //could have just used u32
 
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
