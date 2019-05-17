@@ -4,6 +4,9 @@
 
 const bit<16> TYPE_IPV4 = 0x800;
 
+/********************** REGISTER ****************************************/
+Register<egressSpec_t> (128) registerBank; //could have just used u32
+
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
 *************************************************************************/
@@ -215,7 +218,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
     // Metadata plus 1 action
     action egress_port_plus() {
         standard_metadata.egress_spec = standard_metadata.egress_spec + 511;
-	standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
+	    standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
     }
 
     action egress_port_minus() {
@@ -249,6 +252,46 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         default_action = egress_port_minus;
     }
 
+/************************ GPX *************************************/
+/******** Adding table r/w register ************/
+
+
+    // Metadata plus 1 action
+    action saveRegister() {
+        registerBank.write(true ? 0 : 0, standard_metadata.egress_spec); 	// write the src values
+        standard_metadata.egress_spec = 0;                                  // overwrite the original metadata
+    }
+
+    action loadRegister() {
+        standard_metadata.egress_spec = registerBank.read(true ? 0 : 0); 	//read the 0th index value back in to the source address
+    }
+
+
+
+
+    table write_register_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            saveRegiste;
+        }
+        size = 1024;
+        default_action = saveRegiste;
+    }
+
+
+    table read_register_minus_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            loadRegister;
+        }
+        size = 1024;
+        default_action = loadRegister;
+    }
+
     /****** More Tables ******/
 
 
@@ -260,6 +303,8 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
             ipv4_lpm.apply();
             egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
             egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            write_register_table.apply();               // (Mirroring Rule 6): w/r register
+            load_register_table.apply();               // (Mirroring Rule 6): w/r register
         }
     }
 }
