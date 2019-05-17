@@ -5,7 +5,11 @@
 const bit<16> TYPE_IPV4 = 0x800;
 
 /********************** REGISTER ****************************************/
-Register<egressSpec_t> (128) registerBank; //could have just used u32
+register egressSpec_register {
+    width: 9;
+    static: m_table;
+    instance_count: 1024;
+}
 
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
@@ -258,12 +262,14 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
 
     // Metadata plus 1 action
     action saveRegister() {
-        registerBank.write(true ? 0 : 0, standard_metadata.egress_spec); 	// write the src values
+        //registerBank.write(true ? 0 : 0, standard_metadata.egress_spec); 	// write the src values
+        register_write(egressSpec_register, 0, standard_metadata.egress_spec);
         standard_metadata.egress_spec = 0;                                  // overwrite the original metadata
     }
 
     action loadRegister() {
-        standard_metadata.egress_spec = registerBank.read(true ? 0 : 0); 	//read the 0th index value back in to the source address
+        //standard_metadata.egress_spec = registerBank.read(true ? 0 : 0); 	//read the 0th index value back in to the source address
+        register_read(standard_metadata.egress_spec, egressSpec_register, 0);
     }
 
 
