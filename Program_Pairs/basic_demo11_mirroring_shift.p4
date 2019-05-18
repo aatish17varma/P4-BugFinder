@@ -161,7 +161,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         if(true) {
             middle_egress_spec = (hdr.ipv4.dstAddr == 0xFFFFFFFF)? port_1 : port_4;     // (Mirroring Rule 3): Turnary Operators
             if (hdr.ipv4.dstAddr == 0xFFFFFFFF) {
-                hdr.ipv4.dstAddr == hdr.ipv4.dstAddr + 1;
+                hdr.ipv4.dstAddr = hdr.ipv4.dstAddr + 1;
             }
         }
 
