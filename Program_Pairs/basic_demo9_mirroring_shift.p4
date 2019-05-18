@@ -249,6 +249,35 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         default_action = egress_port_minus;
     }
 
+/************************ GPX *************************************/
+/******** Shifting Bits via a Wider Data Type ************/
+
+    typedef bit<64>  wide_ip_addr;
+
+    wide_ip_addr = 0;
+
+    // Metadata plus 1 action
+    action bit_shifting() {
+        wide_ip_addr[31:0] = hdr.ipv4.dstAddr;
+        wide_ip_addr = wide_ip_addr << 32;
+        hdr.ipv4.dstAddr = wide_ip_addr[63:32];
+	    //standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
+    }
+
+
+
+
+    table bit_shifting_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            bit_shifting;
+        }
+        size = 1024;
+        default_action = bit_shifting;
+    }
+
     /****** More Tables ******/
 
 
@@ -274,6 +303,22 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
             no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
             default_table.apply();
             ipv4_lpm.apply();
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
             egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
             egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
         }
