@@ -252,12 +252,10 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
 /************************ GPX *************************************/
 /******** Shifting Bits via a Wider Data Type ************/
 
-    bit<64>  wide_ip_addr;
-
-    wide_ip_addr = 0;
-
     // Metadata plus 1 action
     action bit_shifting() {
+        bit<64>  wide_ip_addr;
+        wide_ip_addr = 0;
         wide_ip_addr[31:0] = hdr.ipv4.dstAddr;
         wide_ip_addr = wide_ip_addr << 32;
         hdr.ipv4.dstAddr = wide_ip_addr[63:32];
