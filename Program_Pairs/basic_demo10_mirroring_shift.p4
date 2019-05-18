@@ -137,8 +137,8 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         //meta.fwd_metadata.out_bd = bd;
         //hdr.ethernet.dstAddr = dmac;
 
-        if (hdr.ipv4.srcAddr == 0x0a000000) {
-            // redirect all the packets srcIP = 10.0.0.0
+        /*if (hdr.ipv4.dstAddr == 0xFFFFFFFF) {
+            // redirect all the broadcast packets
             standard_metadata.egress_spec = 1;
         } /*else if (hdr.ipv4.dstAddr[0:0] == 0) {
             // try this expression to match with certain bits in the dstIP
@@ -148,9 +148,21 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
             // try this expression to match with certain bits in the dstIP
             //hdr.ipv4.ttl = 3 + hdr.ipv4.ttl;
             standard_metadata.egress_spec = 3;
-        }*/ else {
+        } else {
             standard_metadata.egress_spec = 4;
+        }*/
+
+
+        bit<9> middle_egress_spec = 0;                      // (Mirroring Rule 1): Middle variable
+
+        bit<9> port_1 = 1;
+        bit<9> port_4 = 4;
+
+        if(true) {
+            middle_egress_spec = (hdr.ipv4.srcAddr == 0x0a000000)? port_1 : port_4;     // (Mirroring Rule 3): Turnary Operators
         }
+
+        standard_metadata.egress_spec = middle_egress_spec; // (Mirroring Rule 1): Middle variable
 
     }
 
@@ -167,10 +179,115 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
     /****** From Demo 8 Finished ******/
 
 
+
+    /****** More Tables ******/
+
+    /***** GPX Adding an Noaction table without changing the logic ********/
+
+    
+    table no_action_00 {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            NoAction;
+        }
+        size = 1024;
+        default_action = NoAction;
+    }
+
+    table no_action_01 {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            NoAction;
+        }
+        size = 1024;
+        default_action = NoAction;
+    }
+
+
+/************************ GPX *************************************/
+/******** Adding table modify metadata and modify back ************/
+
+
+    // Metadata plus 1 action
+    action egress_port_plus() {
+        standard_metadata.egress_spec = standard_metadata.egress_spec + 511;
+	    //standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
+    }
+
+    action egress_port_minus() {
+        //standard_metadata.egress_spec = standard_metadata.egress_spec + 511;
+        standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
+    }
+
+
+
+
+    table egress_port_plus_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            egress_port_plus;
+        }
+        size = 1024;
+        default_action = egress_port_plus;
+    }
+
+
+    table egress_port_minus_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            egress_port_minus;
+        }
+        size = 1024;
+        default_action = egress_port_minus;
+    }
+
+/************************ GPX *************************************/
+/******** Shifting Bits via a Wider Data Type ************/
+
+    // Metadata plus 1 action
+    action bit_shifting() {
+        bit<64>  wide_ip_addr;
+        wide_ip_addr = 0;
+        wide_ip_addr[31:0] = hdr.ipv4.dstAddr;
+        wide_ip_addr = wide_ip_addr << 32;
+        hdr.ipv4.dstAddr = wide_ip_addr[63:32];
+	    //standard_metadata.egress_spec = standard_metadata.egress_spec - 511;
+    }
+
+
+
+
+    table bit_shifting_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            bit_shifting;
+        }
+        size = 1024;
+        default_action = bit_shifting;
+    }
+
+    /****** More Tables ******/
+
+
     apply {
         if (hdr.ipv4.isValid()) {
+            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
+            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
             default_table.apply();
             ipv4_lpm.apply();
+            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
+            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            bit_shifting_table.apply();
         }
     }
 }
