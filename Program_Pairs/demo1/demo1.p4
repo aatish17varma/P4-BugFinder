@@ -95,11 +95,16 @@ control ingressImpl(inout headers_t hdr,
     action set_l2ptr(bit<32> l2ptr) {
         meta.fwd_metadata.l2ptr = l2ptr;
     }
+
+    action ipv4_forward(bit<9> egress_spec) {
+        standard_metadata.egress_spec = egress_spec;
+    }
     table ipv4_da_lpm {
         key = {
             hdr.ipv4.dstAddr: lpm;
         }
         actions = {
+            ipv4_forward;
             set_l2ptr;
             my_drop;
         }
