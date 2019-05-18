@@ -125,7 +125,8 @@ control ingressImpl(inout headers_t hdr,
             set_bd_dmac_intf;
             my_drop;
         }
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = NoAction;
     }
 
     apply {
@@ -153,7 +154,8 @@ control egressImpl(inout headers_t hdr,
             rewrite_mac;
             my_drop;
         }
-        default_action = my_drop;
+        //default_action = my_drop;
+        default_action = NoAction;
     }
 
     apply {
