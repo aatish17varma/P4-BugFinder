@@ -88,7 +88,8 @@ control ingressImpl(inout headers_t hdr,
     // 'action' keyword like below.
 
     action my_drop() {
-        mark_to_drop(stdmeta);
+        //mark_to_drop(stdmeta);
+        mark_to_drop();
     }
 
     action set_l2ptr(bit<32> l2ptr) {
@@ -133,7 +134,8 @@ control egressImpl(inout headers_t hdr,
                    inout standard_metadata_t stdmeta)
 {
     action my_drop() {
-        mark_to_drop(stdmeta);
+        //mark_to_drop(stdmeta);
+        mark_to_drop();
     }
     action rewrite_mac(bit<48> smac) {
         hdr.ethernet.srcAddr = smac;
