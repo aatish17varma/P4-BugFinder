@@ -150,11 +150,34 @@ control ingressImpl(inout headers_t hdr,
         stdmeta.egress_spec = stdmeta.egress_spec - 1;
     }
 
+    table egress_port_plus_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            egress_port_plus;
+        }
+        size = 1024;
+        default_action = egress_port_plus;
+    }
+
+
+    table egress_port_minus_table {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            egress_port_minus;
+        }
+        size = 1024;
+        default_action = egress_port_minus;
+    }
+
     apply {
         ipv4_da_lpm.apply();
         mac_da.apply();
-        egress_port_plus.apply();
-        egress_port_minus.apply();
+        egress_port_plus_table.apply();
+        egress_port_minus_table.apply();
     }
 }
 
