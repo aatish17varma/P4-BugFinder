@@ -105,7 +105,7 @@ control ingressImpl(inout headers_t hdr,
 
     action ipv4_forward(bit<9> egress_spec) {
         egressSpec_t newPort = egress_spec;			// Middle variable
-	    standard_metadata.egress_spec = newPort;	// Work with middle variable
+	    stdmeta.egress_spec = newPort;	// Work with middle variable
         stdmeta.egress_spec = newPort;
     }
     table ipv4_da_lpm {
