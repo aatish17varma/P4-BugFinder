@@ -252,7 +252,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
 /************************ GPX *************************************/
 /******** Shifting Bits via a Wider Data Type ************/
 
-    typedef bit<64>  wide_ip_addr;
+    bit<64>  wide_ip_addr;
 
     wide_ip_addr = 0;
 
