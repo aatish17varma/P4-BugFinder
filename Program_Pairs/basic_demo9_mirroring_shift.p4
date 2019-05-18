@@ -287,6 +287,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
             ipv4_lpm.apply();
             egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
             egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
+            bit_shifting_table.apply();
         }
     }
 }
