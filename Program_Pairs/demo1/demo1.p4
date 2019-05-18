@@ -97,7 +97,7 @@ control ingressImpl(inout headers_t hdr,
     }
 
     action ipv4_forward(bit<9> egress_spec) {
-        standard_metadata.egress_spec = egress_spec;
+        stdmeta.egress_spec = egress_spec;
     }
     table ipv4_da_lpm {
         key = {
