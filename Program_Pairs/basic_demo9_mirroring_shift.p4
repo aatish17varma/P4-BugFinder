@@ -283,40 +283,8 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         if (hdr.ipv4.isValid()) {
             no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
             no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_00.apply();                       // (Mirroring Rule 4): Empty Tables
-            no_action_01.apply();                       // (Mirroring Rule 4): Empty Tables
             default_table.apply();
             ipv4_lpm.apply();
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
-            egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
-            egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
             egress_port_plus_table.apply();             // (Mirroring Rule 5): Seprate Actions
             egress_port_minus_table.apply();            // (Mirroring Rule 5): Seprate Actions
         }
