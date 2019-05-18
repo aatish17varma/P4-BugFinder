@@ -107,6 +107,7 @@ control ingressImpl(inout headers_t hdr,
             ipv4_forward;
             set_l2ptr;
             my_drop;
+            NoAction;
         }
         default_action = my_drop;
     }
@@ -124,6 +125,7 @@ control ingressImpl(inout headers_t hdr,
         actions = {
             set_bd_dmac_intf;
             my_drop;
+            NoAction;
         }
         //default_action = my_drop;
         default_action = NoAction;
@@ -153,6 +155,7 @@ control egressImpl(inout headers_t hdr,
         actions = {
             rewrite_mac;
             my_drop;
+            NoAction;
         }
         //default_action = my_drop;
         default_action = NoAction;
