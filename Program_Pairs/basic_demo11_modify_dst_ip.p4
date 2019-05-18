@@ -140,7 +140,7 @@ action ipv4_forward(macAddr_t dstAddr, egressSpec_t port) {
         if (hdr.ipv4.dstAddr == 0xFFFFFFFF) {
             // redirect all the broadcast packets
             // demo11: modify ip address
-            hdr.ipv4.dstAddr == hdr.ipv4.dstAddr + 1;
+            hdr.ipv4.dstAddr = hdr.ipv4.dstAddr + 1;
             standard_metadata.egress_spec = 1;
         } /*else if (hdr.ipv4.dstAddr[0:0] == 0) {
             // try this expression to match with certain bits in the dstIP
